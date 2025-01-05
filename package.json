@@ -1,11 +1,13 @@
 {
   "scripts": {
-    "start": "node index.ts",
-    "dev": "nodemon index.ts"
+    "start": "node src/index.ts",
+    "dev": "nodemon src/index.ts"
   },
   "dependencies": {
+    "@types/pdfkit": "^0.13.8",
     "dotenv": "^16.0.3",
-    "grammy": "^1.12.1"
+    "grammy": "^1.12.1",
+    "pdfkit": "^0.16.0"
   },
   "name": "telegram-bot",
   "version": "1.0.0",
