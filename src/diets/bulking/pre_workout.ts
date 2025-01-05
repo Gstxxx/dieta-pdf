@@ -30,4 +30,32 @@ Proteína: 32g | Carboidratos: 80g | Gorduras: 8g`,
     carbs: 80,
     fats: 8,
   },
+  {
+    title: "Pré-Treino Hipoalergênico 1",
+    content: `
+- 200g de batata doce (180 kcal)
+- 150g de frango grelhado (247 kcal)
+- 2 bananas (210 kcal)
+Total: ~637 kcal
+Proteína: 35g | Carboidratos: 95g | Gorduras: 8g`,
+    allergens: new Set([]),
+    calories: 637,
+    protein: 35,
+    carbs: 95,
+    fats: 8,
+  },
+  {
+    title: "Pré-Treino Hipoalergênico 2",
+    content: `
+- 200g de arroz branco (260 kcal)
+- 150g de carne magra (255 kcal)
+- 1 batata doce média (103 kcal)
+Total: ~618 kcal
+Proteína: 32g | Carboidratos: 90g | Gorduras: 10g`,
+    allergens: new Set([]),
+    calories: 618,
+    protein: 32,
+    carbs: 90,
+    fats: 10,
+  },
 ];

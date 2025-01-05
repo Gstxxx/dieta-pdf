@@ -1,6 +1,6 @@
 import { Meal, AllergenType } from "../../types/diet.types";
 
-export const bulkingSupper: Meal[] = [
+export const maintenanceSupper: Meal[] = [
   {
     title: "Ceia 1",
     content: `

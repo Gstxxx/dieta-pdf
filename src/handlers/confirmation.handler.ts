@@ -21,6 +21,7 @@ export async function handleConfirmation(ctx: Context) {
       await ctx.reply("Gerando seu plano alimentar...");
 
       const preferences = {
+        name: ctx.session.preferences.name || "Usuário",
         goal: ctx.session.preferences.goal,
         mealsPerDay: ctx.session.preferences.mealsPerDay,
         allergens: ctx.session.preferences.allergens,
@@ -34,6 +35,12 @@ export async function handleConfirmation(ctx: Context) {
       });
 
       fs.unlinkSync(pdfPath);
+
+      const tmpDir = "./tmp";
+      if (fs.existsSync(tmpDir) && fs.readdirSync(tmpDir).length === 0) {
+        fs.rmdirSync(tmpDir);
+      }
+
       ctx.session.step = ConversationStep.COMPLETED;
     } catch (error) {
       await ctx.reply(

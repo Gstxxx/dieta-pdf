@@ -41,6 +41,7 @@ export interface DietPlan {
 }
 
 export interface UserPreferences {
+  name: string;
   goal: DietGoal;
   mealsPerDay: number;
   allergens: AllergenType[];

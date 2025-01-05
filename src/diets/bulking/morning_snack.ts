@@ -30,4 +30,32 @@ Proteína: 22g | Carboidratos: 55g | Gorduras: 38g`,
     carbs: 55,
     fats: 38,
   },
+  {
+    title: "Lanche da Manhã Hipoalergênico 1",
+    content: `
+- 2 bananas (210 kcal)
+- 100g de frango desfiado (165 kcal)
+- 100g de batata doce (90 kcal)
+Total: ~465 kcal
+Proteína: 25g | Carboidratos: 70g | Gorduras: 5g`,
+    allergens: new Set([]),
+    calories: 465,
+    protein: 25,
+    carbs: 70,
+    fats: 5,
+  },
+  {
+    title: "Lanche da Manhã Hipoalergênico 2",
+    content: `
+- 200g de arroz branco (260 kcal)
+- 100g de carne moída magra (170 kcal)
+- 1 banana (105 kcal)
+Total: ~535 kcal
+Proteína: 22g | Carboidratos: 85g | Gorduras: 8g`,
+    allergens: new Set([]),
+    calories: 535,
+    protein: 22,
+    carbs: 85,
+    fats: 8,
+  },
 ];

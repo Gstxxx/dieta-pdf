@@ -7,6 +7,7 @@ import { handleGoalSelection } from "./handlers/goal.handler";
 import { handleMealsPerDay } from "./handlers/meals.handler";
 import { handleAllergens } from "./handlers/allergens.handler";
 import { handleConfirmation } from "./handlers/confirmation.handler";
+import { handleName } from "./handlers/name.handler";
 
 dotenv.config();
 
@@ -50,6 +51,13 @@ bot.on("callback_query", async (ctx) => {
       await handleConfirmation(ctx);
       break;
   }
+});
+
+bot.on("message:text", async (ctx) => {
+  if (ctx.session.step === ConversationStep.AWAITING_NAME) {
+    await handleName(ctx);
+  }
+  // ... outros handlers existentes ...
 });
 
 bot.start();
