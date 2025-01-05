@@ -1,6 +1,6 @@
-# Bot TypeScript
+# Dietas | Telegram bot
 
-Bot desenvolvido em TypeScript com funcionalidades modernas e tipagem estática.
+Bot desenvolvido em TypeScript com funcionalidades de dieta e tipagem estática.
 
 ## 📋 Pré-requisitos
 
@@ -12,13 +12,13 @@ Bot desenvolvido em TypeScript com funcionalidades modernas e tipagem estática.
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/Gstxxx/dieta-pdf.git
 ```
 
 2. Navegue até o diretório do projeto:
 
 ```bash
-cd seu-repositorio
+cd dieta-pdf
 ```
 
 3. Altere o arquivo .env com as informações do seu bot
@@ -28,7 +28,7 @@ BOT_TOKEN=
 ```
 
 4. Instale as dependências:
-  
+
 ```bash
 npm install
 ```
