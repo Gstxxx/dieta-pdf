@@ -3,11 +3,8 @@ import { UserPreferences, AllergenType } from "../types/diet.types";
 import fs from "fs";
 import { MealService } from "./meal.service";
 import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const currentDirPath = __dirname;
 
 export class PDFService {
   private static goalNames = {
@@ -35,7 +32,7 @@ export class PDFService {
 
       doc.registerFont(
         "NotoEmoji",
-        path.join(__dirname, "../../assets/fonts/NotoEmoji-Regular.ttf")
+        path.join(currentDirPath, "../../assets/fonts/NotoEmoji-Regular.ttf")
       );
 
       const fileName = `plano_alimentar_${preferences.name.replace(
