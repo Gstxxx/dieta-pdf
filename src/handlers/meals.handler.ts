@@ -11,7 +11,6 @@ export async function handleMealsPerDay(ctx: Context) {
     ctx.session.preferences.mealsPerDay = meals;
     ctx.session.step = ConversationStep.AWAITING_ALLERGENS;
 
-    // Inicia o processo de verificação de alergias
     ctx.session.preferences.allergens = [];
     await askNextAllergen(ctx);
   }

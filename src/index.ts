@@ -32,10 +32,8 @@ bot.use(
   })
 );
 
-// Comando inicial
 bot.command("start", handleStart);
 
-// Handler para callbacks dos botões
 bot.on("callback_query", async (ctx) => {
   switch (ctx.session.step) {
     case ConversationStep.AWAITING_GOAL:
@@ -57,7 +55,6 @@ bot.on("message:text", async (ctx) => {
   if (ctx.session.step === ConversationStep.AWAITING_NAME) {
     await handleName(ctx);
   }
-  // ... outros handlers existentes ...
 });
 
 bot.start();

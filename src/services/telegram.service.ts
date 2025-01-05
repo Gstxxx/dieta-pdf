@@ -1,14 +1,16 @@
-import { Bot, Context, session } from "grammy";
+import { Bot, Context, session, SessionFlavor } from "grammy";
 import { UserSession, ConversationStep } from "../types/session.types";
 import { DietGoal, AllergenType } from "../types/diet.types";
 import { DietService } from "./diet.service";
 
+type MyContext = Context & SessionFlavor<UserSession>;
+
 export class TelegramService {
-  private bot: Bot;
+  private bot: Bot<MyContext>;
   private dietService: DietService;
 
   constructor(token: string) {
-    this.bot = new Bot(token);
+    this.bot = new Bot<MyContext>(token);
     this.dietService = new DietService();
     this.setupMiddleware();
     this.setupHandlers();
@@ -30,12 +32,10 @@ export class TelegramService {
   }
 
   private setupHandlers() {
-    // Comando inicial
     this.bot.command("start", this.handleStart.bind(this));
 
-    // Handlers baseados no estado da conversa
     this.bot.on("message", async (ctx) => {
-      const session = ctx.session as UserSession;
+      const session = ctx.session;
 
       switch (session.step) {
         case ConversationStep.AWAITING_GOAL:
@@ -54,8 +54,8 @@ export class TelegramService {
     });
   }
 
-  private async handleStart(ctx: Context) {
-    const session = ctx.session as UserSession;
+  private async handleStart(ctx: MyContext) {
+    const session = ctx.session;
     session.step = ConversationStep.AWAITING_GOAL;
 
     await ctx.reply(
@@ -68,8 +68,8 @@ export class TelegramService {
     );
   }
 
-  private async handleGoalSelection(ctx: Context) {
-    const session = ctx.session as UserSession;
+  private async handleGoalSelection(ctx: MyContext) {
+    const session = ctx.session;
     const text = ctx.message?.text;
 
     const goalMap: Record<string, DietGoal> = {
@@ -91,8 +91,8 @@ export class TelegramService {
     }
   }
 
-  private async handleMealsPerDay(ctx: Context) {
-    const session = ctx.session as UserSession;
+  private async handleMealsPerDay(ctx: MyContext) {
+    const session = ctx.session;
     const text = ctx.message?.text;
     const meals = Number(text);
 
@@ -110,8 +110,8 @@ export class TelegramService {
     }
   }
 
-  private async handleAllergens(ctx: Context) {
-    const session = ctx.session as UserSession;
+  private async handleAllergens(ctx: MyContext) {
+    const session = ctx.session;
     const text = ctx.message?.text?.toLowerCase();
 
     const allergenQuestions = [
@@ -143,8 +143,8 @@ export class TelegramService {
     }
   }
 
-  private async showPlanConfirmation(ctx: Context) {
-    const session = ctx.session as UserSession;
+  private async showPlanConfirmation(ctx: MyContext) {
+    const session = ctx.session;
     const plan = this.dietService.createMealPlan(session.preferences);
 
     await ctx.reply(
@@ -156,8 +156,8 @@ export class TelegramService {
     );
   }
 
-  private async handleConfirmation(ctx: Context) {
-    const session = ctx.session as UserSession;
+  private async handleConfirmation(ctx: MyContext) {
+    const session = ctx.session;
     const text = ctx.message?.text?.toLowerCase();
 
     if (text === "s") {
@@ -170,6 +170,16 @@ export class TelegramService {
     } else {
       await ctx.reply("❌ Por favor, responda apenas com S ou N:");
     }
+  }
+
+  private async sendCompletePlan(ctx: MyContext, plan: any) {
+    await ctx.reply(
+      "📋 Aqui está seu plano alimentar completo:\n\n" +
+        `Objetivo: ${plan.name}\n` +
+        `Calorias: ${plan.calories} kcal\n` +
+        `Refeições: ${plan.mealsPerDay}x ao dia\n\n` +
+        "Bom apetite!"
+    );
   }
 
   public start() {

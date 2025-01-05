@@ -42,7 +42,7 @@ export async function handleConfirmation(ctx: Context) {
       }
 
       ctx.session.step = ConversationStep.COMPLETED;
-    } catch (error) {
+    } catch {
       await ctx.reply(
         "❌ Desculpe, ocorreu um erro ao gerar seu plano. Por favor, tente novamente."
       );

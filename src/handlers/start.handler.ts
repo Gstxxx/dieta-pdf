@@ -1,6 +1,5 @@
 import { Context } from "../types/context.types";
 import { ConversationStep } from "../types/session.types";
-import { InlineKeyboard } from "grammy";
 
 export async function handleStart(ctx: Context) {
   ctx.session.step = ConversationStep.AWAITING_NAME;

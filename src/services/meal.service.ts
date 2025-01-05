@@ -14,14 +14,11 @@ export class MealService {
     if (allergens.length === 0) return meals;
 
     return meals.filter((meal) => {
-      // Converte o array de alergias do usuário em Set para usar interseção
       const userAllergies = new Set(allergens);
-      // Verifica se há interseção entre as alergias da refeição e do usuário
       const intersection = new Set(
         Array.from(meal.allergens).filter((x) => userAllergies.has(x))
       );
 
-      // Retorna true se não houver interseção (refeição segura)
       return intersection.size === 0;
     });
   }
@@ -30,7 +27,6 @@ export class MealService {
     goal: DietGoal,
     allergens: AllergenType[]
   ): Record<string, Meal[]> {
-    // Combina todas as opções de refeições (normais e hipoalergênicas)
     const allMeals = {
       breakfast: [...bulkingBreakfast],
       pre_workout: [...bulkingPreWorkout],
@@ -40,7 +36,6 @@ export class MealService {
       supper: [...bulkingSupper],
     };
 
-    // Filtra cada tipo de refeição baseado nas alergias
     return {
       breakfast: this.filterMealsByAllergies(allMeals.breakfast, allergens),
       pre_workout: this.filterMealsByAllergies(allMeals.pre_workout, allergens),
@@ -74,8 +69,7 @@ export class MealService {
     const times = this.calculateMealTimes(mealsPerDay);
     const organizedMeals: { time: string; meal: Meal }[] = [];
 
-    // Sempre inclui pré e pós treino em horários adequados
-    const workoutIndex = Math.floor(mealsPerDay / 2); // Treino no meio do dia
+    const workoutIndex = Math.floor(mealsPerDay / 2);
     organizedMeals.push(
       {
         time: times[workoutIndex - 1],
@@ -87,7 +81,6 @@ export class MealService {
       }
     );
 
-    // Distribui as outras refeições
     const remainingTimes = times.filter(
       (_, i) => i !== workoutIndex && i !== workoutIndex - 1
     );
@@ -106,7 +99,6 @@ export class MealService {
       });
     });
 
-    // Ordena por horário
     return organizedMeals.sort((a, b) => a.time.localeCompare(b.time));
   }
 

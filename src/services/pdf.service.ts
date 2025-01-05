@@ -3,6 +3,11 @@ import { UserPreferences, AllergenType } from "../types/diet.types";
 import fs from "fs";
 import { MealService } from "./meal.service";
 import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export class PDFService {
   private static goalNames = {
@@ -28,7 +33,6 @@ export class PDFService {
         margin: 50,
       });
 
-      // Registra a fonte NotoEmoji
       doc.registerFont(
         "NotoEmoji",
         path.join(__dirname, "../../assets/fonts/NotoEmoji-Regular.ttf")
@@ -58,28 +62,34 @@ export class PDFService {
 
       console.log("Refeições organizadas:", organizedMeals);
 
-      // Título
-      console.log("Escrevendo título");
+      const totals = organizedMeals.reduce(
+        (acc, { meal }) => {
+          acc.calories += meal.calories || 0;
+          acc.protein += meal.protein || 0;
+          acc.carbs += meal.carbs || 0;
+          acc.fats += meal.fats || 0;
+          return acc;
+        },
+        { calories: 0, protein: 0, carbs: 0, fats: 0 }
+      );
+
       doc
-        .font("Helvetica-Bold")
         .fontSize(20)
         .text(`Plano Alimentar - ${preferences.name}`, {
           align: "center",
         })
-        .moveDown(2);
-
-      // Informações gerais
-      console.log("Escrevendo informações gerais");
-      doc
-        .font("Helvetica")
-        .fontSize(14)
+        .moveDown()
+        .fontSize(12)
         .text(`Objetivo: ${this.goalNames[preferences.goal]}`)
         .moveDown()
-        .text(`Refeições por dia: ${preferences.mealsPerDay}`)
-        .moveDown();
+        .text(`Calorias: ${Math.round(totals.calories)}kcal`)
+        .moveDown()
+        .text(`Proteína: ${Math.round(totals.protein)}g`)
+        .moveDown()
+        .text(`Carboidratos: ${Math.round(totals.carbs)}g`)
+        .moveDown()
+        .text(`Gorduras: ${Math.round(totals.fats)}g`);
 
-      // Alergias
-      console.log("Escrevendo seção de alergias");
       if (preferences.allergens.length > 0) {
         doc
           .font("Helvetica")
@@ -96,8 +106,6 @@ export class PDFService {
         doc.font("Helvetica").text("Alergias: Nenhuma").moveDown(2);
       }
 
-      // Adiciona cada refeição ao PDF
-      console.log("Escrevendo refeições");
       organizedMeals.forEach(({ time, meal }) => {
         console.log(`Escrevendo refeição: ${meal.title} às ${time}`);
         doc.font("Helvetica-Bold").fontSize(14).text(`${meal.title} (${time})`);
