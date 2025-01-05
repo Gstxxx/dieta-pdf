@@ -43,3 +43,12 @@ ou inicie como desenvolvedor
 ```bash
 npm run dev
 ```
+
+
+## Chat
+
+![image](https://github.com/user-attachments/assets/dc0eda04-e9cc-44ca-a006-62e980de62e6)
+
+## preview
+
+![image](https://github.com/user-attachments/assets/6aab6095-f4f0-404c-8108-2d20cb6d098a)
